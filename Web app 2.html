@@ -1,0 +1,195 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌟 Daily To-Do List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+
+    .todo-container {
+      background: #fff;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    #task-input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    #add-task-btn {
+      padding: 12px 18px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    #add-task-btn:hover {
+      background-color: #218838;
+    }
+
+    ul#task-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    ul#task-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8f9fa;
+      margin-bottom: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    ul#task-list li.completed span.task-name {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .task-left input[type="checkbox"] {
+      transform: scale(1.3);
+      cursor: pointer;
+    }
+
+    .task-name {
+      font-size: 16px;
+    }
+
+    .delete-btn {
+      font-size: 20px;
+      color: #dc3545;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .delete-btn:hover {
+      color: #bd2130;
+    }
+
+    @media (max-width: 500px) {
+      .task-name {
+        font-size: 14px;
+      }
+
+      #task-input {
+        font-size: 14px;
+      }
+
+      #add-task-btn {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="todo-container">
+    <h2>🌟 Daily To-Do List</h2>
+    <div class="input-group">
+      <input type="text" id="task-input" placeholder="Enter a new task..." />
+      <button id="add-task-btn">Add Task</button>
+    </div>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById("task-input");
+    const addTaskBtn = document.getElementById("add-task-btn");
+    const taskList = document.getElementById("task-list");
+
+    addTaskBtn.addEventListener("click", addTask);
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const li = document.createElement("li");
+
+      const taskLeft = document.createElement("div");
+      taskLeft.className = "task-left";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.addEventListener("change", () => {
+        li.classList.toggle("completed");
+      });
+
+      const span = document.createElement("span");
+      span.className = "task-name";
+      span.textContent = taskText;
+
+      taskLeft.appendChild(checkbox);
+      taskLeft.appendChild(span);
+
+      const deleteBtn = document.createElement("span");
+      deleteBtn.className = "delete-btn";
+      deleteBtn.innerHTML = "🗑️";
+      deleteBtn.addEventListener("click", () => {
+        li.remove();
+      });
+
+      li.appendChild(taskLeft);
+      li.appendChild(deleteBtn);
+      taskList.appendChild(li);
+
+      taskInput.value = "";
+    }
+
+    // Optional: Press Enter to add task
+    taskInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        addTask();
+      }
+    });
+  </script>
+
+</body>
+</html>
